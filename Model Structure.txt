@@ -16,7 +16,7 @@ layers = [ ...
     softmaxLayer
     classificationLayer]；
 
-3. 1D-CNN_3
+3. 1D-CNN_3 model
 
 layers = [ ...
     sequenceInputLayer(numFeatures)
@@ -37,7 +37,7 @@ layers = [ ...
     softmaxLayer
     classificationLayer];
 
-4. TD-CNN
+4. TD-CNN model
 
 layers = [ ...
     sequenceInputLayer(numFeatures)
@@ -52,7 +52,7 @@ layers = [ ...
     softmaxLayer
     classificationLayer];
 
-5. ITD-CNN
+5. ITD-CNN model
 
 layers = [ ...
     sequenceInputLayer(numFeatures,'Name','input_1')
@@ -72,10 +72,6 @@ layers = [ ...
 
 Resconv_1 = gruLayer(200,'Name','Resconv_1')
 
-lgraph = layerGraph(layers);
-lgraph = addLayers(lgraph,Resconv_1);
-lgraph = connectLayers(lgraph,'input_1','Resconv_1');
-lgraph = connectLayers(lgraph,'Resconv_1','add/in2');
 
 
 
