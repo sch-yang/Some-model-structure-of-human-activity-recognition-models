@@ -1,0 +1,83 @@
+1. 1D-CNN model
+
+layers = [
+        convolution1dLayer(filterSize,numFilters,DilationFactor=dilationFactor,Padding="causal",Name="conv1_"+i)
+        layerNormalizationLayer
+        additionLayer(2,Name="add_"+i)];
+
+
+2. GRU model
+
+layers = [ ...
+    sequenceInputLayer(numFeatures)
+
+    gruLayer(200)
+    fullyConnectedLayer(numClasses)
+    softmaxLayer
+    classificationLayer]；
+
+3. 1D-CNN_3
+
+layers = [ ...
+    sequenceInputLayer(numFeatures)
+    convolution1dLayer(filterSize,numFilters,Padding="causal")
+    layerNormalizationLayer
+    reluLayer
+    convolution1dLayer(filterSize,numFilters,Padding="causal")
+    layerNormalizationLayer
+    reluLayer
+    convolution1dLayer(filterSize,numFilters,Padding="causal")
+    layerNormalizationLayer
+    reluLayer
+    gruLayer(200)
+    layerNormalizationLayer
+    gruLayer(200)
+    layerNormalizationLayer
+    fullyConnectedLayer(numClasses)
+    softmaxLayer
+    classificationLayer];
+
+4. TD-CNN
+
+layers = [ ...
+    sequenceInputLayer(numFeatures)
+    convolution1dLayer(filterSize,numFilters,Padding="causal")
+    layerNormalizationLayer
+    reluLayer
+    convolution1dLayer(filterSize,numFilters,Padding="causal")
+    layerNormalizationLayer
+    reluLayer
+    gruLayer(200)
+    fullyConnectedLayer(numClasses)
+    softmaxLayer
+    classificationLayer];
+
+5. ITD-CNN
+
+layers = [ ...
+    sequenceInputLayer(numFeatures,'Name','input_1')
+    convolution1dLayer(filterSize,numFilters,Padding="causal",Name='conv_1')
+    layerNormalizationLayer('Name','norm1')
+    reluLayer('Name','relu1')
+    convolution1dLayer(filterSize,numFilters,Padding="causal",Name='conv_2')
+    layerNormalizationLayer('Name','norm2')
+    reluLayer('Name','relu2')
+    gruLayer(200,'Name','gru1')
+
+    additionLayer(2,'Name','add')
+
+    fullyConnectedLayer(numClasses,'Name','fc')
+    softmaxLayer('Name','soft')
+    classificationLayer('Name','class')]
+
+Resconv_1 = gruLayer(200,'Name','Resconv_1')
+
+lgraph = layerGraph(layers);
+lgraph = addLayers(lgraph,Resconv_1);
+lgraph = connectLayers(lgraph,'input_1','Resconv_1');
+lgraph = connectLayers(lgraph,'Resconv_1','add/in2');
+
+
+
+
+
